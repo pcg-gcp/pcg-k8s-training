@@ -1,0 +1,1 @@
+Create a pod running nginx in Kubernetes
