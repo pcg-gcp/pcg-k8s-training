@@ -1,3 +1,2 @@
 kubectl apply -f $PATH/pod.yaml
 kubectl get pods
-kubectl delete pod nginx
