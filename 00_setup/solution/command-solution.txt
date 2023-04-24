@@ -1,0 +1,3 @@
+Kubectl command to create a namespace: kubectl create namespace
+
+Kubectl command to setup the new namespace as your default namespace: kubectl config set-context --current --namespace

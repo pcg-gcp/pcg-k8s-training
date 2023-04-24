@@ -1,0 +1,4 @@
+kubectl expose deployment nginx-deployment --name=nginx-service  --type=LoadBalancer --port=80
+kubectl get service
+URL: http://<external IP>
+kubectl delete service nginx-service

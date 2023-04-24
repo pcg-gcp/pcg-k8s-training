@@ -1,0 +1,1 @@
+Write a YAML file to create a deployment and use the same configuration in task 01_pod-creation (nginx container). Define a replicaSet to create two nginx Pods.

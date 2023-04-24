@@ -1,0 +1,1 @@
+Create a service that exposes the deployment from exercise 02_deployment-creation. As the type of the service use an ingress.
