@@ -1,12 +1,16 @@
-Rewrite the YAML files from 01_pod-creation and 02_deployment-creation 
+# Set Request and Limits
 
-Use the Yaml from the task above as templates and make sure you define a request and a limit for workload safety
+- Rewrite the YAML files from 01_pod-creation and 02_deployment-creation 
 
-Use the following parameters:
+- For this taks use the yaml files in the current directory as templates and make sure you define a request and a limit for workload safety
+
+- Use the following parameters:
+&nbsp;```
 Requests: 
     Cpu: 200m
 Limit:
     Cpu: 500m
     Memory: 128Mi
+&nbsp;```
 
 Update your pods and make sure your values got changed. Afterwards try and use different values.
