@@ -1,2 +1,0 @@
-kubectl apply -f $PATH/pod.yaml
-kubectl get pods

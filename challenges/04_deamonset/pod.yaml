@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ping-daemon
+spec:
+  containers:
+  - name: ping-daemon
+    image: alpine
+    command:
+    - "ping"
+    - "publiccloudgroup.com"

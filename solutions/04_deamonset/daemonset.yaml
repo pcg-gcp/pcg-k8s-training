@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: ping-daemon
-        image: busybox
+        image: alpine
         command:
         - "ping"
-        - "google.com"
+        - "publiccloudgroup.com"

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: caddy
 spec:
   containers:
-  - name: nginx
-    image: nginx:1.14.2
+  - name: caddy
+    image: caddy:2.6.4
     ports:
     - containerPort: 80
