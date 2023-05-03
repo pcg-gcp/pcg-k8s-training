@@ -1,9 +1,10 @@
+Create a DeamonSet:;
 kubectl apply -f daemonset.yaml
 
+Check if the DeamonSet is running
 kubectl get daemonsets
 
 kubectl describe pod <POD-NAME>
 
+Check if the package reaching their destination
 kubectl logs <POD-NAME>
-
-kubectl delete -f ping-daemon-set.yaml

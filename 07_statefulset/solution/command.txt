@@ -1,4 +1,4 @@
-Createting the statefulset:
+Creating the statefulset:
 kubectl create -f statefulset.yaml
 
 Make sure that the service and the statefulset is running
