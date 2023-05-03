@@ -1,0 +1,9 @@
+kubectl apply -f daemonset.yaml
+
+kubectl get daemonsets
+
+kubectl describe pod <POD-NAME>
+
+kubectl logs <POD-NAME>
+
+kubectl delete -f ping-daemon-set.yaml

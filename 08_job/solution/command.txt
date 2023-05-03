@@ -1,0 +1,9 @@
+Create the job
+kubectl create -f $PATH/job.yaml
+
+Check if the job is running:
+kubectl get job <job-name>
+
+Confirm the ouput:
+kubectl logs <pod name>
+

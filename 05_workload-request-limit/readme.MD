@@ -7,7 +7,7 @@
 - Update your pods and make sure your values got changed. Afterwards try and use different values.
 
 - Use the following parameters:
-&nbsp;```
+```
 Requests: 
     Cpu: 200m
 Limit:

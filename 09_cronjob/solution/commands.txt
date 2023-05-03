@@ -1,0 +1,12 @@
+Create the Cronjob:
+kubectl creates -f <name of the cronjob yaml>
+
+Check the status of the Cronjob:
+kubectl get cronjob <name of the CronJob>
+kubectl get jobs --watch
+
+Make sure that the output is correct
+  - First save the ouput of the pod in a variable
+    pods=$(kubectl get pods --selector=job-name=<name of an job> --output=jsonpath={.items[*].metadata.name})
+  - Then watch the log of the pod
+    kubectl logs $pods

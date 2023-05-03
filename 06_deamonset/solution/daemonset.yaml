@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ping-daemon
+spec:
+  selector:
+    matchLabels:
+      app: ping-daemon
+  template:
+    metadata:
+      labels:
+        app: ping-daemon
+    spec:
+      containers:
+      - name: ping-daemon
+        image: busybox
+        command:
+        - "ping"
+        - "google.com"
