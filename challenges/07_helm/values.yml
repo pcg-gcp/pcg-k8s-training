@@ -1,0 +1,3 @@
+controller:
+  serviceType: ClusterIP
+  servicePort: 8080
