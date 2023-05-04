@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+data:
+  config.toml: |
+    name = "Timo"
+    drink = "Coffee"
