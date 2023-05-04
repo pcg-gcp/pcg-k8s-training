@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: https-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - timo-dempwolf.k8s.trygoo.gl
+    secretName: ingress-tls
+  rules:
+  - host: timo-dempwolf.k8s.trygoo.gl
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: caddy-internal
+            port:
+              number: 80
