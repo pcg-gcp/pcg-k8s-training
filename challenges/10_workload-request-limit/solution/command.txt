@@ -1,6 +1,0 @@
-Update your pod:
-kubectl apply -f <file-name>
-
-Check if the values got changed:
-kubectl describe <pod-name>
-kubectl describe <deployment>
