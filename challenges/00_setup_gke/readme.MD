@@ -1,4 +1,4 @@
-# Setup your environment
+# Setup your GKE environment
 
 - Make sure you installed gcloud on your local machine. For further information click on the following link: [gcloud installation](https://cloud.google.com/sdk/docs/install?hl=de#deb)
 
@@ -9,5 +9,7 @@
 - After confirmation that both components are installed, make sure you connect with your google account: ```gcloud auth login```
 
 - To start working with the kubernetes cluster you need to connect to the kubernetes cluster: ```gcloud container clusters get-credentials <cluster-name> --region <cluster-region> --project <project-id>```
+
+- Get a list of all available namespaces by running the command `kubectl get namespaces`, your namespace usually should have the following structure `forename[leading-to-letters-lastname]`
 
 - Before performing any operations on the cluster switch to your namespace: ```kubectl config set-context --current --namespace=<namespace-name>```

@@ -8,10 +8,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-      - timo-dempwolf.k8s.trygoo.gl
+      - timo-dempwolf.k8s.usu.trygoo.gl
     secretName: ingress-tls
   rules:
-  - host: timo-dempwolf.k8s.trygoo.gl
+  - host: timo-dempwolf.k8s.usu.trygoo.gl
     http:
       paths:
       - path: /
