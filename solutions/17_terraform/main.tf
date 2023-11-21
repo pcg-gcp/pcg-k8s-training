@@ -28,7 +28,7 @@ resource "google_container_cluster" "cluster" {
 resource "google_container_node_pool" "node_pool" {
   name       = "node-pool-marius"
   location   = var.target_region
-  cluster    = google_container_cluster.schulungs_cluster.name
+  cluster    = google_container_cluster.cluster.name
   node_count = 2
 
   node_config {
