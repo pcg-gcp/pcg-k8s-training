@@ -12,4 +12,6 @@
 
 - Test your scaling config by exposing the deployment and adding load to your service
 
+- You can create artificial load on your deployment with the pod defined in the [load-generator.yaml](./load-generator.yaml). Another possible solution is running ```kubectl port-forward``` call the service from your browser and spam F5.
+
 If you need any help check out the [documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/).
