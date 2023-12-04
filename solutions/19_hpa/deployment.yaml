@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: caddy
-  labels:
-    app: caddy
+  name: demo-deployment
+  namespace: mariusbu
 spec:
-  replicas: 3
+  replicas: 2
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: caddy
+      app: demo-deployment
   template:
     metadata:
       labels:
-        app: caddy
+        app: demo-deployment
     spec:
       containers:
-      - name: caddy
-        image: caddy:2.6.4
+      - image: gcr.io/heptio-images/ks-guestbook-demo:0.2
+        name: guestbook-ui
         ports:
         - containerPort: 80
         resources:
           requests:
-            cpu: 200m
+            cpu: 50m
           limits:
             memory: 128Mi
-            cpu: 500m
+            cpu: 256m

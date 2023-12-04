@@ -14,7 +14,10 @@
 
 - Add load to the service
 
-  ```while true; do```
-  ```curl http://your-service-ip:your-service-port```
-  ```done```
+```
+#!/bin/bash
+while true; do
+curl http://your-service-ip:your-service-port
+done
+```
 

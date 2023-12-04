@@ -1,6 +1,6 @@
 # Create a Deployment with HPA
 
-- Use the deployment we have previously created in section 11 as tmp and deploy it
+- Use the deployment we have previously created in section 11 as tmp and deploy it in your namespace
 
 - Modify this deployment and add a Horizontal Pod Autoscaler (HPA)
 
