@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-deployment
+  namespace: mariusbu
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: demo-deployment
+  template:
+    metadata:
+      labels:
+        app: demo-deployment
+    spec:
+      containers:
+      - image: gcr.io/heptio-images/ks-guestbook-demo:0.2
+        name: guestbook-ui
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 50m
+          limits:
+            memory: 128Mi
+            cpu: 256m

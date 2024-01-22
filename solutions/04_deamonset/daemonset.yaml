@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: ping-daemon
+  namespace: mariusbu
 spec:
   selector:
     matchLabels:
@@ -11,6 +12,8 @@ spec:
       labels:
         app: ping-daemon
     spec:
+      nodeSelector:
+        cloud.google.com/gke-nodepool: "small-nodes"
       containers:
       - name: ping-daemon
         image: alpine

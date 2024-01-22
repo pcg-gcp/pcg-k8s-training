@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-argo-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/pcg-gcp/pcg-usu-k8s-training.git
+    targetRevision: HEAD
+    path: challenges/18_argocd/app
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: mariusbu
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true

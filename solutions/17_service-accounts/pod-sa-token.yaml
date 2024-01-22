@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: POD_NAME
+  namespace: mariusbu
+spec:
+  containers:
+  - image: caddy
+    name: caddy:2.6.4
+    volumeMounts:
+    - mountPath: /var/run/secrets/tokens
+      name: accounting-token
+  serviceAccountName: test-service-account
+  volumes:
+  - name: accounting-token
+    projected:
+      sources:
+      - serviceAccountToken:
+          path: accounting-token
+          expirationSeconds: 86400
+          audience: some-oidc-audience
