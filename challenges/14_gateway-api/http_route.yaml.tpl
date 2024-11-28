@@ -5,9 +5,9 @@ metadata:
   namespace: <your-namespace>
 spec:
   parentRefs:
-  - name: <your-namespace>
+  - name: <your-gateway>
   hostnames:
-  - "<your-namespace>.gateway.usu.trygoo.gl"
+  - "<IP Address>.nip.io"
   rules:
   - matches:
     - path:
