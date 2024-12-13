@@ -7,7 +7,7 @@ spec:
   parentRefs:
   - name: marius-gateway
   hostnames:
-  - "marius.gateway.usu.trygoo.gl"
+  - "34.107.178.137.nip.io"
   rules:
   - matches:
     - path:

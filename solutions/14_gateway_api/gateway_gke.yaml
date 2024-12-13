@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: dh-gateway
+  namespace: dh
+spec:
+  gatewayClassName: gke-l7-global-external-managed
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              dh-namespace: "true"
+  # Name of a static global IP in the GCP project of the cluster
+  addresses:
+    - type: NamedAddress
+      value: k8s-demo-dh-ip

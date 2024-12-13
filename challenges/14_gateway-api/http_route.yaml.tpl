@@ -6,6 +6,7 @@ metadata:
 spec:
   parentRefs:
   - name: <your-gateway>
+    namespace: <namespace of gateway>
   hostnames:
   - "<IP Address>.nip.io"
   rules:

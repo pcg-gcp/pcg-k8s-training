@@ -1,0 +1,40 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: demo-route
+  namespace: dh
+spec:
+  parentRefs:
+  - name: dh-gateway
+  hostnames:
+  - "34.107.178.137.nip.io"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: demo-service
+      port: 80
+
+---
+
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: demo-route-namespace2
+  namespace: dh2
+spec:
+  parentRefs:
+  - name: dh-gateway
+    namespace: dh
+  hostnames:
+  - "34.107.178.137.nip.io"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /version2/
+    backendRefs:
+    - name: demo-service-dh2
+      port: 80

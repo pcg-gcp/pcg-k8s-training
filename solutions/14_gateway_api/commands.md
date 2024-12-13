@@ -1,6 +1,6 @@
 # Setup a Nginx Fabric Gateway to handle Ingress Traffic to your cluster
 
-- Install and deploy the Nginx Gateway API resources
+- Install and deploy the Nginx Gateway API resources if required. Not needed if Gateway API is activated natively in a GKE cluster.
 ```
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v0.8.1/standard-install.yaml
 kubectl apply -f https://github.com/nginxinc/nginx-gateway-fabric/releases/download/v1.0.0/crds.yaml

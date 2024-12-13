@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dh
+  labels:
+    dh-namespace: "true"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dh2
+  labels:
+    dh-namespace: "true"
