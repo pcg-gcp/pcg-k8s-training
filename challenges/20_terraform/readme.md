@@ -1,7 +1,7 @@
 # Create GCP infrastructure with Terraform
-- Install [Terrform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) on your local machine, or run the [Docker version](https://hub.docker.com/r/hashicorp/terraform). As an alternative you can run Terraform in the [GCP Cloudshell](https://shell.cloud.google.com) were TF is preinstalled 
-- All resources should be deployed in the GCP project with the ID `pcg-usu-k8s-schulung`
-- Save your state file in the following GCS bucket `usu-k8s-demo-state-files` use your name as the prefix in the backend configuration
+- Install [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) on your local machine, or run the [Docker version](https://hub.docker.com/r/hashicorp/terraform). As an alternative you can run Terraform in the [GCP Cloudshell](https://shell.cloud.google.com) were TF is preinstalled 
+- All resources should be deployed in the training GCP project
+- Save your state file in the GCS bucket for terraform state, use your name as the prefix in the backend configuration
 
 ### Create the GCP following infrastructure
 
