@@ -19,3 +19,8 @@ spec:
         image: caddy:2.6.4
         ports:
         - containerPort: 80
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 10

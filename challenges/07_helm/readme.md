@@ -11,3 +11,10 @@
 - Check if Jenkins is reachable with the IP of the LoadBalancer
 
 If you need any help check out the [Helm documentation](https://helm.sh/docs/helm/helm_install/).
+
+* Note: you have to give your user additional permissions on a GKE cluster using the role cluster-admin, or the IAM permission "Kubernetes Engine Admin (roles/container.admin)" on GCP project level.
+```
+kubectl create clusterrolebinding cluster-admin-binding \
+--clusterrole=cluster-admin \
+--user=[gcp user email]
+```
