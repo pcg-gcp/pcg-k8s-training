@@ -13,5 +13,7 @@
 - Adopt your HTTPRoute resource to distribute the traffic evenly to your newly create and the the existing deployment.
 - Check with your web browser if the weighted routing works as expected.
 
-If you need any help check out the documentation for [Gateway API](https://gateway-api.sigs.k8s.io/) in general and the [Nginx Fabric Gateway](https://docs.nginx.com/nginx-gateway-fabric/how-to/traffic-management/routing-traffic-to-your-app/).
-If you use a GKE Cluster also check the Google documentation about how to [Deploy Gateway resources](https://cloud.google.com/kubernetes-engine/docs/how-to/deploying-gateways)
+## Documentation and other helpful resources
+- If you need any help check out the documentation for [Gateway API](https://gateway-api.sigs.k8s.io/) in general and the [Nginx Fabric Gateway](https://docs.nginx.com/nginx-gateway-fabric/how-to/traffic-management/routing-traffic-to-your-app/).
+- [Kubernetes Documentation for Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/) also shows helpful flow diagrams.
+- If you use a GKE Cluster also check the Google documentation about how to [Deploy Gateway resources](https://cloud.google.com/kubernetes-engine/docs/how-to/deploying-gateways)
