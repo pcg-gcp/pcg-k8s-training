@@ -5,5 +5,6 @@ metadata:
   namespace: <your-namespace>
 spec:
   gatewayClassName: ???
+  # For GCP see: https://cloud.google.com/kubernetes-engine/docs/how-to/deploying-gateways#external-gateway
   listeners:
   - ???
