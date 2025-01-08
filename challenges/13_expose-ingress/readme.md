@@ -4,6 +4,14 @@
 
 - Expose the deployment internally by deploying a service of type ClusterIP.
 
+- Adjust the in the template provided url with your namespace or use a wildcard domain from [nip.io](https://nip.io)
+
+- Expose the deployment externally by creating an ingress
+
+- Check you can reach the deployment externally via the hostname specified
+
+## optional Challenge
+
 - Expose the deployment externally by creating an ingress that is using a cert-manager issued certificate.
 
 - Check the status of your certificate by using the command `kubectl get certificates`

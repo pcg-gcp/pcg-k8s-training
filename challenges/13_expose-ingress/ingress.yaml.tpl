@@ -1,17 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: https-ingress
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt"
+  name: http-ingress
 spec:
-  ingressClassName: nginx
-  tls:
-  - hosts:
-      - <yourname>.k8s.usu.trygoo.gl
-    secretName: ingress-tls
   rules:
-  - host: <yourname>.k8s.usu.trygoo.gl
+  - host: "34.107.178.137.nip.io"
     http:
       paths:
       - path: /
