@@ -24,7 +24,7 @@ metadata:
   name: broken-web-app
   namespace: grand-finale
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: web-application
@@ -76,7 +76,7 @@ spec:
               cpu: "100m"
           livenessProbe:
             httpGet:
-              path: /health
+              path: /
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 10
@@ -119,16 +119,3 @@ spec:
             sizeLimit: "100Mi"
         - name: shared-logs
           emptyDir: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: broken-web-service
-  namespace: grand-finale
-spec:
-  selector:
-    app: web-application
-  ports:
-    - port: 80
-      targetPort: 80
-  type: ClusterIP
