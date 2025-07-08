@@ -33,7 +33,7 @@ kubectl describe deployment broken-web-app -n grand-finale
 
 #### Create missing ServiceAccount
 ```bash
-kubectl create serviceaccount app-service-account -n grand-finale
+kubectl create serviceaccount web-app-service-account -n grand-finale
 ```
 
 #### Create missing PVC
@@ -68,7 +68,7 @@ template:
       app: web-application  # was: broken-web-app
 
 # Fix service account reference
-serviceAccountName: app-service-account  # was: nonexistent-service-account
+serviceAccountName: web-app-service-account  # create this SA
 
 # Fix ConfigMap references
 configMapKeyRef:
@@ -81,7 +81,7 @@ secretKeyRef:
 
 # Fix PVC reference
 persistentVolumeClaim:
-  claimName: app-data-pvc  # was: missing-pvc
+  claimName: app-data-pvc  # create this PVC
 
 # Fix health check ports
 livenessProbe:

@@ -27,7 +27,7 @@ data:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: app-service-account  # Fixed: created the missing service account
+  name: web-app-service-account  # Fixed: created the missing service account
   namespace: grand-finale
 ---
 apiVersion: v1
@@ -57,7 +57,7 @@ spec:
       labels:
         app: web-application  # Fixed: matches the selector
     spec:
-      serviceAccountName: app-service-account  # Fixed: matches existing SA
+      serviceAccountName: web-app-service-account  # Fixed: matches existing SA
       containers:
       - name: web-server
         image: nginx:1.21-alpine

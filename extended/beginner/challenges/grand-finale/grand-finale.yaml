@@ -33,7 +33,7 @@ spec:
       labels:
         app: broken-web-app
     spec:
-      serviceAccountName: nonexistent-service-account
+      serviceAccountName: web-app-service-account
       containers:
         - name: web-server
           image: nginx:1.21-alpine
@@ -113,7 +113,7 @@ spec:
             name: application-config
         - name: data-storage
           persistentVolumeClaim:
-            claimName: missing-pvc
+            claimName: app-data-pvc
         - name: cache-volume
           emptyDir:
             sizeLimit: "100Mi"
