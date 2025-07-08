@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: flaky-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: flaky-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flaky-app
+spec:
+  containers:
+  - name: app
+    image: busybox
+    command: ["/bin/sh"]
+    args:
+    - -c
+    - |
+      echo "🚀 PVC-based Flaky App Starting..."
+      echo "📁 Checking persistent storage for initialization flag..."
+      
+      if [ ! -f /data/app-initialized ]; then
+        echo "❌ First run detected - no initialization flag found!"
+        echo "🔧 Performing initialization process..."
+        
+        sleep 3
+        echo "📝 Creating initialization files..."
+        echo "$(date): App initialized successfully" > /data/app-initialized
+        echo "initialized" > /data/status
+        
+        echo "💾 Initialization data saved to persistent storage"
+        echo "💥 Simulating initialization failure - restart required!"
+        echo "🔄 (The initialization data is now saved, restart will succeed)"
+        exit 1
+        
+      else
+        echo "✅ Initialization flag found in persistent storage!"
+        echo "📖 Reading initialization info:"
+        cat /data/app-initialized
+        
+        STATUS=$(cat /data/status 2>/dev/null || echo "unknown")
+        echo "📊 Current status: $STATUS"
+        echo "🎉 Starting application normally..."
+        echo "$(date): Last successful startup" >> /data/startup-log
+        
+        while true; do
+          echo "🚀 PVC-backed app running at $(date)"
+          sleep 30
+        done
+      fi
+    volumeMounts:
+    - name: persistent-storage
+      mountPath: /data
+  volumes:
+  - name: persistent-storage
+    persistentVolumeClaim:
+      claimName: flaky-pvc
+  restartPolicy: Never

@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resource-hog
+spec:
+  containers:
+  - name: memory-hog
+    image: python:3.11-slim
+    command: ["python"]
+    args:
+      - -c
+      - |
+        print("🐷 Memory Hog starting up!")
+        a = []
+        while True:
+            a.append(' ' * 10**6)
+            print(f"😰 Still allocating... Kubernetes might not be happy... 🔥")
+
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "10m"
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+
+
+
+  # zu grosser service cpu ram -> resizing
+  # helm?
+  # helm rollbacks (secrets löschen etc)
