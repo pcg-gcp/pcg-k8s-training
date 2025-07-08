@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connection-chaos-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: connection-chaos-backend
+  template:
+    metadata:
+      labels:
+        app: connection-chaos-backend
+    spec:
+      containers:
+      - name: custom-server
+        image: busybox
+        command: ["sh", "-c"]
+        args:
+          - |
+            echo "🚀 Starting server on port 8081! 🔌";
+            
+            mkdir -p /tmp/www
+            echo "✅ Connection Chaos Service is WORKING! 🎉🔥" > /tmp/www/index.html
+            echo "🏆 Congratulations! You've successfully fixed the connection issues! 🎯" >> /tmp/www/index.html
+            
+            echo "🌐 HTTP server starting on port 8081...";
+            cd /tmp/www
+            busybox httpd -f -p 8081
+            
+            echo "📡 Server ready - waiting for connections on port 8081! 🔌"
+        ports:
+        - containerPort: 8081
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8081
+          initialDelaySeconds: 10
+          periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: connection-chaos-service
+spec:
+  selector:
+    app: connection-chaos-backend #connection-chaos-frontend  # <-- WRONG! Should be 'connection-chaos-backend'
+  ports:
+  - port: 80
+    targetPort: 8081 #8080     # <-- WRONG! Should be 8081
+  type: ClusterIP

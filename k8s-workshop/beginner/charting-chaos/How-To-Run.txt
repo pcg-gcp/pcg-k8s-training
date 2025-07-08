@@ -1,0 +1,9 @@
+helm install charting-chaos beginner/charting-chaos
+
+kubectl get secret charting-chaos-secret -o yaml
+
+helm upgrade charting-chaos beginner/charting-chaos --set secretValue=changed456
+
+helm rollback charting-chaos 1
+
+kubectl get secret charting-chaos-secret -o yaml
