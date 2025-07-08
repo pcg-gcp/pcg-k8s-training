@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-greedy-app
+  labels:
+    app: resource-greedy-app
+spec:
+  replicas: 3  # Reduced from 10 to 3
+  selector:
+    matchLabels:
+      app: resource-greedy-app
+  template:
+    metadata:
+      labels:
+        app: resource-greedy-app
+    spec:
+      containers:
+      - name: web-server
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "512Mi"   # Reduced from 4Gi
+            cpu: "200m"       # Reduced from 3000m
+          limits:
+            memory: "1Gi"     # Reduced from 8Gi
+            cpu: "500m"       # Reduced from 4000m
+        env:
+        - name: MESSAGE
+          value: "🚀 Resource Greedy App - Now running with reasonable resources!"
+      - name: background-worker
+        image: busybox
+        command: ["/bin/sh"]
+        args:
+          - -c
+          - |
+            echo "🔄 Background worker starting..."
+            while true; do
+              echo "⚡ Processing background tasks..."
+              sleep 10
+            done
+        resources:
+          requests:
+            memory: "256Mi"   # Reduced from 2Gi
+            cpu: "100m"       # Reduced from 1500m
+          limits:
+            memory: "512Mi"   # Reduced from 4Gi
+            cpu: "200m"       # Reduced from 2000m

@@ -1,0 +1,158 @@
+# First, create the namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: grand-finale
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: grand-finale
+data:
+  database_url: "postgresql://db:5432/myapp"
+  log_level: "info"
+  cache_size: "128MB"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: database-credentials
+  namespace: grand-finale
+type: Opaque
+data:
+  username: YWRtaW4=  # admin
+  password: c2VjcmV0MTIz  # secret123
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-service-account  # Fixed: created the missing service account
+  namespace: grand-finale
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-data-pvc  # Fixed: created the missing PVC
+  namespace: grand-finale
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broken-web-app
+  namespace: grand-finale
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web-application  # Fixed: matches the pod label
+  template:
+    metadata:
+      labels:
+        app: web-application  # Fixed: matches the selector
+    spec:
+      serviceAccountName: app-service-account  # Fixed: matches existing SA
+      containers:
+      - name: web-server
+        image: nginx:1.21-alpine
+        ports:
+        - containerPort: 80
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config  # Fixed: matches the actual ConfigMap name
+              key: database_url
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: username  # Fixed: matches the actual secret key
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials  # Fixed: matches the actual secret name
+              key: password
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: log_level
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+        - name: data-storage
+          mountPath: /var/data
+        - name: cache-volume
+          mountPath: /tmp/cache
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80  # Fixed: matches the container port
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80  # Fixed: matches the container port
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      - name: sidecar-logger
+        image: busybox:1.35
+        command: ["/bin/sh"]
+        args:
+          - -c
+          - |
+            echo "📝 Logger sidecar starting..."
+            while true; do
+              echo "$(date): Processing logs..." >> /shared/app.log
+              sleep 15
+            done
+        volumeMounts:
+        - name: shared-logs
+          mountPath: /shared
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "25m"
+          limits:
+            memory: "64Mi"
+            cpu: "50m"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config  # Fixed: matches the actual ConfigMap name
+      - name: data-storage
+        persistentVolumeClaim:
+          claimName: app-data-pvc  # Fixed: matches the created PVC
+      - name: cache-volume
+        emptyDir:
+          sizeLimit: "100Mi"
+      - name: shared-logs
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: broken-web-service
+  namespace: grand-finale
+spec:
+  selector:
+    app: web-application  # Fixed: matches the pod label
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP

@@ -1,0 +1,118 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: flaky-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: app-initializer
+spec:
+  backoffLimit: 0 # No automatic retries
+  template:
+    spec:
+      containers:
+        - name: initializer
+          image: busybox
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+              echo "🚀 App Initializer Starting..."
+              echo "📁 Checking persistent storage for initialization flag..."
+
+              if [ ! -f /data/init-attempt ]; then
+                echo "❌ First run detected - no previous attempt found!"
+                echo "🔧 Simulating initialization failure..."
+                
+                # Mark that we attempted initialization
+                echo "$(date): First initialization attempt" > /data/init-attempt
+                
+                echo "💥 Initialization failed on first attempt!"
+                echo "🔄 Delete this job and run it again to see success"
+                exit 1
+                
+              else
+                echo "✅ Previous initialization attempt found!"
+                echo "🔧 Performing actual initialization process..."
+                
+                sleep 3
+                echo "📝 Creating initialization files..."
+                echo "$(date): App initialized successfully" > /data/app-initialized
+                echo "initialized" > /data/status
+                
+                echo "💾 Initialization data saved to persistent storage"
+                echo "🎉 Initialization completed successfully!"
+                echo "$(date): Initialization success" >> /data/startup-log
+              fi
+          volumeMounts:
+            - name: persistent-storage
+              mountPath: /data
+      volumes:
+        - name: persistent-storage
+          persistentVolumeClaim:
+            claimName: flaky-pvc
+      restartPolicy: Never
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaky-app
+  labels:
+    app: flaky-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flaky-app
+  template:
+    metadata:
+      labels:
+        app: flaky-app
+    spec:
+      containers:
+        - name: main-app
+          image: busybox
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+              echo "🚀 Main App Starting..."
+              echo "📁 Checking if initialization was completed..."
+
+              if [ ! -f /data/app-initialized ]; then
+                echo "❌ ERROR: App not initialized!"
+                echo "🔧 Please run the initialization job first:"
+                echo "   kubectl delete job app-initializer"
+                echo "   kubectl apply -f flaky-initializer.yaml"
+                echo "💥 Failing until initialization is complete..."
+                exit 1
+              else
+                echo "✅ Initialization found! Starting main application..."
+                echo "📖 Reading initialization info:"
+                cat /data/app-initialized
+                
+                STATUS=$(cat /data/status 2>/dev/null || echo "unknown")
+                echo "📊 Current status: $STATUS"
+                echo "🎉 Main application running normally..."
+                echo "$(date): Main app startup" >> /data/startup-log
+                
+                while true; do
+                  echo "🚀 Main app running at $(date)"
+                  sleep 30
+                done
+              fi
+          volumeMounts:
+            - name: persistent-storage
+              mountPath: /data
+      volumes:
+        - name: persistent-storage
+          persistentVolumeClaim:
+            claimName: flaky-pvc
+

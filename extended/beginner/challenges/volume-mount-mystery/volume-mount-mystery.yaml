@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  storage_name: "my-app-data"
+  data_path: "/app/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-app-storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reference-riddle
+  labels:
+    app: reference-riddle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reference-riddle
+  template:
+    metadata:
+      labels:
+        app: reference-riddle
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          env:
+            - name: DATA_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: data_path
+          volumeMounts:
+            - name: data-volume
+              mountPath: $(DATA_PATH)
+            - name: config-vol
+              mountPath: /etc/config
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: application-data
+        - name: config-vol
+          configMap:
+            name: app-settings
