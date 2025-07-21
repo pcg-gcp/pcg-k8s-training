@@ -1,0 +1,75 @@
+# ------------------------------------------------------------------------------
+# values.yaml for Argo CD Helm Chart (argo/argo-cd)
+# Docs: https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
+# ------------------------------------------------------------------------------
+
+# Install the default Argo CD components
+global:
+  domain: ""
+
+controller:
+  enabled: true
+  metrics:
+    enabled: true
+
+server:
+  enabled: true
+  service:
+    type: NodePort
+    nodePort: 30080
+  ingress:
+    enabled: false
+
+  # Optionally expose the Argo CD UI with a specific port
+  extraArgs:
+    - --insecure    # Needed only if you want to disable TLS (not recommended for production)
+
+repoServer:
+  enabled: true
+  metrics:
+    enabled: true
+
+dex:
+  enabled: false 
+  metrics:
+    enabled: false
+
+redis:
+  enabled: true
+
+applicationSet:
+  enabled: true
+
+notifications:
+  enabled: false
+
+configs:
+  cm:
+    create: true
+    application.instanceLabelKey: argocd.argoproj.io/instance
+    # Customize the Argo CD UI branding
+    admin.enabled: "true"
+    exec.enabled: "true"
+    timeout.reconciliation: 180s
+  rbac:
+    create: true
+    policy.default: role:readonly
+    policy.csv: |
+      g, admin-group, role:admin
+  secret:
+    createSecret: true
+    argocdServerAdminPassword: ""
+  repositories:
+    my-app-repo:
+      url: https://github.com/pcg-gcp/pcg-k8s-training.git
+      type: git
+
+# Resource settings
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  

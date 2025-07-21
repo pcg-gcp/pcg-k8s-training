@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: team-backend-apps
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Backend application deployments for the backend team
+  sourceRepos:
+    - '*'
+  destinations:
+    - namespace: 'app-backend-*'
+      server: '*'
+    - namespace: 'portal-backend-*'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
