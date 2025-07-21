@@ -42,7 +42,6 @@ kubectl apply -f workshop-challenge.yaml
 
 - This applies the Argo CD Application and challenge AppProject to your cluster.
 
----
 
 ## 6. Test the Challenge Deployment
 
