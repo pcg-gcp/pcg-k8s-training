@@ -1,7 +1,7 @@
 ## 1. Add the Argo Helm Chart
 
 ```
-helm repo add argo [https://argoproj.github.io/argo-helm](https://argoproj.github.io/argo-helm)
+helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update
 ```
 
