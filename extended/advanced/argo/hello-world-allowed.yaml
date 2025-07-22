@@ -6,7 +6,7 @@ metadata:
 spec:
   description: Allows deployment of the hello-world app to its own namespace.
   sourceRepos:
-    - '*'
+    - "*"
   destinations:
     - namespace: hello-world
       server: https://kubernetes.default.svc
@@ -22,3 +22,4 @@ spec:
       kind: ConfigMap
     - group: ""
       kind: Secret
+
