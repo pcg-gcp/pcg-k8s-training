@@ -16,7 +16,7 @@ Gateway API.
     helm repo add argo https://argoproj.github.io/argo-helm
     helm repo update
     helm install argocd argo/argo-cd -n argocd --create-namespace \
-      -f extended/advanced/gitops-with-gateway/values.yaml
+      -f values.yaml
     ```
 
     **Access Argo CD UI:**
@@ -91,4 +91,3 @@ Gateway API.
 * [Traefik Gateway API Provider](https://doc.traefik.io/traefik/providers/kubernetes-gateway/)
 * [Kubernetes Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 * [Kubernetes Gateway API](https://gateway-api.sigs.k8s.io/)
-

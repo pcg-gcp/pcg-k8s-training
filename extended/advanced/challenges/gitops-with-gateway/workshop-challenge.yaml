@@ -1,18 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: super-app
+  name: hello-world
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/user/pcg-k8s-training.git
+    repoURL: https://github.com/<user>/pcg-k8s-training.git
     targetRevision: HEAD
-    path: extended/advanced/troubleshooting-master/app # Incorrect path
+    path: extended/advanced/challenges/gitops-with-gateway/hello-world-app
   destination:
     server: https://kubernetes.default.svc
-    namespace: super-app-backend
+    namespace: default
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+
