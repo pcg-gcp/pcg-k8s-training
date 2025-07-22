@@ -47,6 +47,29 @@ kubectl apply -f workshop-challenge.yaml
 
 After fixing the AppProject as per the workshop, confirm your deployed app is accessible:
 
+#UPDATES UPDATES
+
 ```
-minikube service -n hello-world nginx --url
+echo "$(minikube ip) hello-world.local" | sudo tee -a /etc/hosts
+
+minikube addons enable ingress
+
+minikube tunnel
 ```
+
+
+
+
+
+
+
+## migrate to gateway
+
+helm repo add traefik https://helm.traefik.io/traefik
+helm repo update
+helm install traefik traefik/traefik --namespace traefik --create-namespace --set providers.kubernetesGateway.enabled=true
+
+kubectl apply -f gateway.yaml
+
+check with 
+kubectl get gatewayclass traefik

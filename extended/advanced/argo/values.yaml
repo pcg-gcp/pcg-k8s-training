@@ -56,7 +56,7 @@ configs:
     argocdServerAdminPassword: ""
   repositories:
     my-app-repo:
-      url: https://github.com/AlexStangier/k8s-hello-world #TODO change to proper repo
+      url: https://github.com/pcg-gcp/pcg-k8s-training-argocd
       type: git
 
 resources:
