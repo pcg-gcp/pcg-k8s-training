@@ -1,0 +1,14 @@
+# Argo CD Helm Chart Values
+# This file can be used to customize the Argo CD installation.
+# For this challenge, it can remain largely empty or contain minimal settings.
+
+server:
+  service:
+    type: ClusterIP
+
+# Example: If you want to enable ingress for Argo CD server
+# ingress:
+#   enabled: true
+#   hostname: argocd.example.com
+#   annotations:
+#     kubernetes.io/ingress.class: traefik
