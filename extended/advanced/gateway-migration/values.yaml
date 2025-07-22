@@ -1,8 +1,0 @@
-ports:
-  http: 80
-  https: 443
-  gateway: 8000
-
-providers:
-  kubernetesGateway:
-    enabled: true
