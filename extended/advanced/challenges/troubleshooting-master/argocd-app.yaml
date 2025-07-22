@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/user/pcg-k8s-training.git
     targetRevision: HEAD
-    path: extended/advanced/troubleshooting-master/app # Incorrect path
+    path: extended/advanced/challenges/troubleshooting-master/app # Incorrect path
   destination:
     server: https://kubernetes.default.svc
     namespace: super-app-backend
