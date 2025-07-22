@@ -16,7 +16,7 @@ Gateway API.
     helm repo add argo https://argoproj.github.io/argo-helm
     helm repo update
     helm install argocd argo/argo-cd -n argocd --create-namespace \
-      -f values.yaml
+      -f extended/advanced/gitops-with-gateway/values.yaml
     ```
 
     **Access Argo CD UI:**
@@ -42,33 +42,39 @@ Gateway API.
     ```bash
     helm repo add traefik https://helm.traefik.io/traefik
     helm repo update
-    helm install traefik traefik/traefik -n traefik --create-namespace
+    helm install traefik traefik/traefik -n traefik --create-namespace \
+      --set providers.kubernetesGateway.enabled=true
     ```
+
+    **Run Minikube Tunnel:**
+
+    ```bash
+    minikube tunnel
+    ```
+
+    Keep this command running in a separate terminal.
 
 2. **Deploy the app with Ingress:** Apply the `workshop-challenge.yaml` to
     have Argo CD deploy the application from the `hello-world-app`
     directory. At this stage, it uses a standard `ingress.yaml`.
 
 3. **Configure Hostname Resolution:** To access the application using its
-    hostname, you must map the hostname to your cluster's IP address. For
-    Minikube, you can do this by adding an entry to your `/etc/hosts` file.
+    hostname, you must map the hostname to the IP address of the Traefik
+    LoadBalancer service. This IP will be available after `minikube tunnel`
+    is running.
 
     ```bash
-    echo "$(minikube ip) hello-world.local" | sudo tee -a /etc/hosts
+    # Get the LoadBalancer IP for Traefik
+    TRAEFIK_IP=$(kubectl get svc -n traefik traefik -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+    # Add to /etc/hosts
+    echo "${TRAEFIK_IP} hello-world.local" | sudo tee -a /etc/hosts
     ```
 
 4. **Verify initial deployment:** Ensure the application is running and
     accessible via the Ingress at `http://hello-world.local`.
 
 5. **Migrate to Gateway API:**
-    * **Reconfigure Traefik:** Upgrade your Traefik installation to enable
-        the Kubernetes Gateway provider.
-
-        ```bash
-        helm upgrade traefik traefik/traefik -n traefik \
-          --set providers.kubernetesGateway.enabled=true
-        ```
-
     * Delete the existing `ingress.yaml`.
     * Create and apply a new `Gateway` resource to define the traffic
         entry point.

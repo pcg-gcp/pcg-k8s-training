@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/<user>/pcg-k8s-training.git
+    repoURL: https://github.com/argoproj/argocd-example-apps.git
     targetRevision: HEAD
-    path: extended/advanced/gitops-with-gateway/hello-world-app
+    path: guestbook
   destination:
     server: https://kubernetes.default.svc
     namespace: default
