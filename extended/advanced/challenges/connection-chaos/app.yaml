@@ -5,9 +5,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/pcg-gcp/pcg-k8s-training-argocd
+    repoURL: https://github.com/<user>/pcg-k8s-training.git
     targetRevision: HEAD
-    path: connection-chaos/base
+    path: cextended/advanced/challenges/connection-chaos/base
   destination:
     server: https://kubernetes.default.svc
     namespace: default
