@@ -23,10 +23,10 @@ Gateway API.
 
     ```bash
     # Port-forward the Argo CD server to your local machine
-    kubectl port-forward svc/argocd-server -n argocd 8080:80
+    minikube service -n argocd argocd-server --url    
     ```
 
-    Access the UI at `http://localhost:8080`.
+    Access the UI at the IPs displayed.
 
     **Get the initial admin password:**
 
