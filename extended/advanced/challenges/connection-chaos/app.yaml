@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: connection-chaos
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/pcg-gcp/pcg-k8s-training-argocd
+    targetRevision: HEAD
+    path: connection-chaos/base
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated: {}
