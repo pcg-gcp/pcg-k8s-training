@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: gcr.io/google-samples/hello-app:2.0
+        image: europe-west1-docker.pkg.dev/cw-academy-sandbox-alex/k8s-image/frontend-service:latest
         ports:
         - containerPort: 8080
 ---
